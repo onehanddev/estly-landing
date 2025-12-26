@@ -5,16 +5,10 @@ import { motion } from "framer-motion";
 import { 
   Shield, 
   Mail, 
-  Users, 
   Zap, 
   Workflow, 
   CheckCircle, 
-  ArrowRight,
-  Database,
-  Search,
-  MessageSquare,
-  Lock,
-  ExternalLink
+  Database
 } from "lucide-react";
 import WaitlistForm from "@/components/WaitlistForm";
 import { cn } from "@/lib/utils";
@@ -106,45 +100,6 @@ export default function LandingPage() {
               className="flex flex-col items-center justify-center gap-4"
             >
               <WaitlistForm />
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.4 }}
-              className="mt-24 relative max-w-6xl mx-auto"
-            >
-              <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-blue-500/20 to-primary/20 rounded-[2.5rem] blur-2xl opacity-20" />
-              <div className="relative bg-background border border-border/50 rounded-3xl shadow-[0_0_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden aspect-[16/10] flex items-center justify-center p-4 md:p-8">
-                {/* Mockup Placeholder */}
-                <div className="w-full h-full rounded-2xl border border-border/50 bg-muted/20 flex flex-col relative overflow-hidden">
-                  <div className="h-12 border-b border-border/50 flex items-center px-4 gap-2 bg-muted/40">
-                    <div className="w-3 h-3 rounded-full bg-red-400/20" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400/20" />
-                    <div className="w-3 h-3 rounded-full bg-green-400/20" />
-                    <div className="flex-1 ml-4 h-6 rounded-md bg-muted/50" />
-                  </div>
-                  <div className="flex-1 p-6 relative">
-                    <div className="absolute inset-0 bg-grid opacity-[0.03]" />
-                    <div className="grid grid-cols-12 gap-6 h-full">
-                      <div className="col-span-3 space-y-4">
-                        <div className="h-8 rounded-lg bg-primary/10 w-full animate-pulse" />
-                        <div className="h-4 rounded bg-muted/50 w-3/4" />
-                        <div className="h-4 rounded bg-muted/50 w-1/2" />
-                        <div className="h-4 rounded bg-muted/50 w-2/3" />
-                      </div>
-                      <div className="col-span-9 rounded-xl border border-border/50 bg-background/50 flex items-center justify-center">
-                        <div className="flex flex-col items-center gap-4">
-                          <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center">
-                            <Workflow className="w-8 h-8 text-primary/40" />
-                          </div>
-                          <p className="text-sm font-medium text-muted-foreground">Interactive Dashboard Preview</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </motion.div>
           </div>
         </section>
@@ -257,7 +212,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="py-16 border-t border-border/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-6">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -276,14 +231,6 @@ export default function LandingPage() {
                 <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
                 <li><a href="#how-it-works" className="hover:text-foreground transition-colors">How it Works</a></li>
                 <li><a href="#waitlist" className="hover:text-foreground transition-colors">Beta Access</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-6">Connect</h4>
-              <ul className="space-y-4 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors flex items-center gap-2">Twitter <ExternalLink className="w-3 h-3" /></a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors flex items-center gap-2">LinkedIn <ExternalLink className="w-3 h-3" /></a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Contact Support</a></li>
               </ul>
             </div>
           </div>
