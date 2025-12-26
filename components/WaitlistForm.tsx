@@ -25,10 +25,10 @@ export default function WaitlistForm() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex items-center gap-3 p-4 bg-primary/10 border border-primary/20 rounded-xl text-primary"
+        className="flex items-center gap-3 p-4 bg-emerald-500 rounded-xl text-white"
       >
         <CheckCircle2 className="w-5 h-5" />
-        <p className="font-medium text-sm">You've been added to the waitlist!</p>
+        <p className="font-medium text-sm">You&apos;ve been added to the waitlist!</p>
       </motion.div>
     );
   }
@@ -43,8 +43,8 @@ export default function WaitlistForm() {
           placeholder="Enter your work email"
           required
           className={cn(
-            "flex-1 px-4 py-3 rounded-xl border border-border bg-background",
-            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
+            "flex-1 px-4 py-3 rounded-xl border border-white/20 bg-white text-gray-900 placeholder:text-gray-500",
+            "focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40",
             "transition-all duration-200 text-sm md:text-base"
           )}
         />
@@ -52,8 +52,8 @@ export default function WaitlistForm() {
           type="submit"
           disabled={status === "loading"}
           className={cn(
-            "px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium",
-            "hover:opacity-90 active:scale-95 transition-all duration-200",
+            "px-6 py-3 rounded-xl bg-gray-900 text-white font-medium",
+            "hover:bg-gray-800 active:scale-95 transition-all duration-200",
             "flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed",
             "text-sm md:text-base whitespace-nowrap"
           )}
@@ -68,7 +68,7 @@ export default function WaitlistForm() {
           )}
         </button>
       </div>
-      <p className="mt-3 text-xs text-muted-foreground text-center sm:text-left">
+      <p className="mt-3 text-xs opacity-70 text-center sm:text-left">
         Join 200+ company secretaries in the private beta.
       </p>
     </form>
