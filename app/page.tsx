@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 import { 
   Shield, 
   Mail, 
@@ -10,14 +13,29 @@ import {
   Database,
   Search,
   MessageSquare,
-  Lock
+  Lock,
+  ExternalLink
 } from "lucide-react";
 import WaitlistForm from "@/components/WaitlistForm";
 import { cn } from "@/lib/utils";
 
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+};
+
+const stagger = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background selection:bg-primary/20">
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -33,7 +51,7 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</a>
             <a href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">How it Works</a>
-            <a href="#waitlist" className="px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity">
+            <a href="#waitlist" className="px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 hover:scale-105 active:scale-95 transition-all">
               Join Beta
             </a>
           </div>
@@ -49,54 +67,105 @@ export default function LandingPage() {
           </div>
 
           <div className="container mx-auto px-4 text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium mb-6 animate-fade-in">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium mb-8"
+            >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              Now in Private Beta
-            </div>
+              Limited Beta Release
+            </motion.div>
             
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 max-w-4xl mx-auto leading-[1.1]">
-              The AI Operating System for <span className="text-primary">Company Secretaries</span>
-            </h1>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="text-5xl md:text-8xl font-bold tracking-tight mb-8 max-w-5xl mx-auto leading-[1.05]"
+            >
+              The AI Operating System for <span className="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Company Secretaries</span>
+            </motion.h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-              Estly turns unstructured client emails into structured CRM actions. 
-              Handle entity formation and post-licensing changes with fewer errors and more control.
-            </p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-lg md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed"
+            >
+              Estly turns unstructured client instructions from emails into structured actions. 
+              Automate entity management while staying in full control.
+            </motion.p>
 
-            <div className="flex flex-col items-center justify-center gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="flex flex-col items-center justify-center gap-4"
+            >
               <WaitlistForm />
-            </div>
+            </motion.div>
 
-            <div className="mt-20 relative max-w-5xl mx-auto">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-2xl blur opacity-25" />
-              <div className="relative bg-background border border-border/50 rounded-2xl shadow-2xl overflow-hidden aspect-[16/9] flex items-center justify-center p-8">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.4 }}
+              className="mt-24 relative max-w-6xl mx-auto"
+            >
+              <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-blue-500/20 to-primary/20 rounded-[2.5rem] blur-2xl opacity-20" />
+              <div className="relative bg-background border border-border/50 rounded-3xl shadow-[0_0_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden aspect-[16/10] flex items-center justify-center p-4 md:p-8">
                 {/* Mockup Placeholder */}
-                <div className="w-full h-full rounded-lg border border-border/50 bg-muted/30 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-grid opacity-10" />
-                  <div className="flex flex-col items-center gap-4">
-                    <Workflow className="w-12 h-12 text-primary/40" />
-                    <p className="text-sm font-medium text-muted-foreground">Interactive Dashboard Preview</p>
+                <div className="w-full h-full rounded-2xl border border-border/50 bg-muted/20 flex flex-col relative overflow-hidden">
+                  <div className="h-12 border-b border-border/50 flex items-center px-4 gap-2 bg-muted/40">
+                    <div className="w-3 h-3 rounded-full bg-red-400/20" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-400/20" />
+                    <div className="w-3 h-3 rounded-full bg-green-400/20" />
+                    <div className="flex-1 ml-4 h-6 rounded-md bg-muted/50" />
+                  </div>
+                  <div className="flex-1 p-6 relative">
+                    <div className="absolute inset-0 bg-grid opacity-[0.03]" />
+                    <div className="grid grid-cols-12 gap-6 h-full">
+                      <div className="col-span-3 space-y-4">
+                        <div className="h-8 rounded-lg bg-primary/10 w-full animate-pulse" />
+                        <div className="h-4 rounded bg-muted/50 w-3/4" />
+                        <div className="h-4 rounded bg-muted/50 w-1/2" />
+                        <div className="h-4 rounded bg-muted/50 w-2/3" />
+                      </div>
+                      <div className="col-span-9 rounded-xl border border-border/50 bg-background/50 flex items-center justify-center">
+                        <div className="flex flex-col items-center gap-4">
+                          <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center">
+                            <Workflow className="w-8 h-8 text-primary/40" />
+                          </div>
+                          <p className="text-sm font-medium text-muted-foreground">Interactive Dashboard Preview</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* Value Prop Section */}
-        <section id="features" className="py-24 bg-muted/30">
+        <section id="features" className="py-32 bg-muted/20">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Focus on Advisory, Not Admin</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+            <div className="text-center mb-20">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Focus on Advisory, Not Admin</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
                 Estly automates the repetitive parts of corporate services, keeping you in control with human-in-the-loop workflows.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div 
+              variants={stagger}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
               <FeatureCard 
                 icon={<Mail className="w-6 h-6" />}
                 title="Email Intelligence"
@@ -127,17 +196,17 @@ export default function LandingPage() {
                 title="10x Faster Turnaround"
                 description="Reduce processing time from days to minutes. Free your team for high-value advisory and governance work."
               />
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-24">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">A Smarter Workflow</h2>
+        <section id="how-it-works" className="py-32 relative overflow-hidden">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold mb-20 text-center tracking-tight">How Estly Works</h2>
               
-              <div className="space-y-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <Step 
                   number="01"
                   title="Receive Instructions"
@@ -159,40 +228,70 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section id="waitlist" className="py-24">
+        <section id="waitlist" className="py-32">
           <div className="container mx-auto px-4">
-            <div className="bg-primary rounded-3xl p-8 md:p-16 text-center text-primary-foreground relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent)]" />
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="bg-primary rounded-[3rem] p-12 md:p-24 text-center text-primary-foreground relative overflow-hidden shadow-2xl shadow-primary/20"
+            >
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent)]" />
+              <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
               
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to scale your corporate services?</h2>
-                <p className="text-lg opacity-90 mb-10 max-w-xl mx-auto">
+              <div className="relative z-10 max-w-4xl mx-auto">
+                <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">Ready to scale your corporate services?</h2>
+                <p className="text-xl md:text-2xl opacity-90 mb-12 max-w-2xl mx-auto leading-relaxed">
                   Join the exclusive waitlist for our private beta and be the first to transform your company secretarial practice.
                 </p>
                 <div className="flex justify-center">
                   <WaitlistForm />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-border/50">
+      <footer className="py-16 border-t border-border/50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
-                <Shield className="w-4 h-4 text-primary-foreground" />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="col-span-1 md:col-span-2">
+              <div className="flex items-center gap-2 mb-6">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="text-2xl font-bold tracking-tight">Estly</span>
               </div>
-              <span className="font-bold">Estly</span>
-              <span className="text-xs text-muted-foreground ml-2">© 2025 Estly AI. All rights reserved.</span>
+              <p className="text-muted-foreground max-w-sm leading-relaxed">
+                The AI-native workspace for modern company secretaries. 
+                Streamlining entity management and post-licensing changes.
+              </p>
             </div>
+            <div>
+              <h4 className="font-bold mb-6">Product</h4>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
+                <li><a href="#how-it-works" className="hover:text-foreground transition-colors">How it Works</a></li>
+                <li><a href="#waitlist" className="hover:text-foreground transition-colors">Beta Access</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-6">Connect</h4>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-foreground transition-colors flex items-center gap-2">Twitter <ExternalLink className="w-3 h-3" /></a></li>
+                <li><a href="#" className="hover:text-foreground transition-colors flex items-center gap-2">LinkedIn <ExternalLink className="w-3 h-3" /></a></li>
+                <li><a href="#" className="hover:text-foreground transition-colors">Contact Support</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-border/50">
+            <p className="text-sm text-muted-foreground">© 2025 Estly AI. All rights reserved.</p>
             <div className="flex items-center gap-8">
               <a href="#" className="text-sm text-muted-foreground hover:text-foreground">Privacy Policy</a>
               <a href="#" className="text-sm text-muted-foreground hover:text-foreground">Terms of Service</a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground">Contact</a>
             </div>
           </div>
         </div>
@@ -203,30 +302,39 @@ export default function LandingPage() {
 
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
   return (
-    <div className="p-8 rounded-2xl bg-background border border-border/50 hover:border-primary/50 transition-colors group">
-      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+    <motion.div 
+      variants={fadeIn}
+      className="p-10 rounded-3xl bg-background border border-border/50 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group relative overflow-hidden"
+    >
+      <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+        {React.cloneElement(icon as React.ReactElement, { className: "w-24 h-24" })}
+      </div>
+      <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
         {icon}
       </div>
-      <h3 className="text-xl font-bold mb-3">{title}</h3>
-      <p className="text-muted-foreground leading-relaxed">
+      <h3 className="text-2xl font-bold mb-4">{title}</h3>
+      <p className="text-muted-foreground leading-relaxed text-lg">
         {description}
       </p>
-    </div>
+    </motion.div>
   );
 }
 
 function Step({ number, title, description }: { number: string, title: string, description: string }) {
   return (
-    <div className="flex gap-8 items-start">
-      <div className="text-4xl md:text-5xl font-black text-primary/10 select-none">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="flex flex-col items-center text-center px-4"
+    >
+      <div className="text-7xl font-black text-primary/5 mb-6 select-none leading-none">
         {number}
       </div>
-      <div>
-        <h3 className="text-xl font-bold mb-2 mt-2">{title}</h3>
-        <p className="text-muted-foreground leading-relaxed max-w-xl">
-          {description}
-        </p>
-      </div>
-    </div>
+      <h3 className="text-2xl font-bold mb-4">{title}</h3>
+      <p className="text-muted-foreground leading-relaxed">
+        {description}
+      </p>
+    </motion.div>
   );
 }
