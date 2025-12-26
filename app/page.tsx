@@ -307,7 +307,9 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode, titl
       className="p-10 rounded-3xl bg-background border border-border/50 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group relative overflow-hidden"
     >
       <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
-        {React.cloneElement(icon as React.ReactElement, { className: "w-24 h-24" })}
+        {React.isValidElement(icon) && React.cloneElement(icon as React.ReactElement<any>, { 
+          className: "w-24 h-24" 
+        })}
       </div>
       <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
         {icon}
