@@ -12,7 +12,6 @@ import {
   Database
 } from "lucide-react";
 import WaitlistForm from "@/components/WaitlistForm";
-import { cn } from "@/lib/utils";
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -79,7 +78,7 @@ export default function LandingPage() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-5xl md:text-8xl font-bold tracking-tight mb-8 max-w-5xl mx-auto leading-[1.05]"
             >
-              The AI Operating System for <span className="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Company Secretaries</span>
+              AI Drafting Copilot for <span className="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Corporate Services Teams</span>
             </motion.h1>
             
             <motion.p 
@@ -88,8 +87,8 @@ export default function LandingPage() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="text-lg md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed"
             >
-              Estly turns unstructured client instructions from emails into structured actions. 
-              Automate entity management while staying in full control.
+              Estly turns client email instructions into structured, review-ready transaction drafts.
+              Your team approves every change before records and documents move forward.
             </motion.p>
 
             <motion.div 
@@ -107,9 +106,10 @@ export default function LandingPage() {
         <section id="features" className="py-32 bg-muted/20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Focus on Advisory, Not Admin</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Built for Early-Stage Operational Leverage</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Estly automates the repetitive parts of corporate services, keeping you in control with human-in-the-loop workflows.
+                Today, Estly focuses on intake, review, records, and draft generation for recurring
+                post-incorporation corporate changes.
               </p>
             </div>
 
@@ -122,33 +122,33 @@ export default function LandingPage() {
             >
               <FeatureCard 
                 icon={<Mail className="w-6 h-6" />}
-                title="Email Intelligence"
-                description="Extract instructions directly from client emails. Estly understands complex requests and maps them to structured workflows."
+                title="Email Intake Parsing"
+                description="Paste client instructions from email and convert them into structured transaction data in seconds."
               />
               <FeatureCard 
                 icon={<Database className="w-6 h-6" />}
-                title="CRM Sync"
-                description="Seamlessly sync with Salesforce, Zoho, and more. No more manual data entry or jumping between disconnected tools."
+                title="Company Record Workspace"
+                description="Keep officers, shareholders, UBOs, and shareholding details in one operational record workspace."
               />
               <FeatureCard 
                 icon={<Shield className="w-6 h-6" />}
                 title="Human-in-the-Loop"
-                description="AI handles the heavy lifting, but you stay in control with mandatory review checkpoints for every critical action."
+                description="AI drafts the structure, then your team validates and edits every change before save and document generation."
               />
               <FeatureCard 
                 icon={<Workflow className="w-6 h-6" />}
-                title="Entity Lifecycle"
-                description="Manage everything from initial formation to post-licensing changes—shareholders, directors, and structure updates."
+                title="Transaction Pipeline"
+                description="Track progress from intake to staging review to document draft and completion for each request."
               />
               <FeatureCard 
                 icon={<CheckCircle className="w-6 h-6" />}
-                title="Compliance-First"
-                description="Automated audit trails and jurisdictional compliance checks built into every step of the process."
+                title="Draft Document Output"
+                description="Generate first-draft board resolutions, consent letters, and register of members from reviewed transaction data."
               />
               <FeatureCard 
                 icon={<Zap className="w-6 h-6" />}
-                title="10x Faster Turnaround"
-                description="Reduce processing time from days to minutes. Free your team for high-value advisory and governance work."
+                title="Faster First Passes"
+                description="Reduce repetitive manual drafting work so your team spends more time on review and client advisory."
               />
             </motion.div>
           </div>
@@ -164,17 +164,17 @@ export default function LandingPage() {
                 <Step 
                   number="01"
                   title="Receive Instructions"
-                  description="Client sends an email about a change in directors or a new entity formation. Estly's AI instantly parses the request."
+                  description="A client sends an email about director, shareholder, or UBO updates. Estly parses the request into structured data."
                 />
                 <Step 
                   number="02"
                   title="Review & Validate"
-                  description="Estly prepares the necessary updates and documents. You review the structured data against internal SOPs and local laws."
+                  description="Your team reviews and edits extracted fields in staging before committing changes to records."
                 />
                 <Step 
                   number="03"
-                  title="Execute & Sync"
-                  description="With one click, documents are generated and your CRM is updated. A complete audit trail is logged automatically."
+                  title="Generate Drafts"
+                  description="Create draft legal documents from the reviewed transaction and move the case to completion."
                 />
               </div>
             </div>
@@ -197,7 +197,8 @@ export default function LandingPage() {
               <div className="relative z-10 max-w-4xl mx-auto">
                 <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">Ready to scale your corporate services?</h2>
                 <p className="text-xl md:text-2xl opacity-90 mb-12 max-w-2xl mx-auto leading-relaxed">
-                  Join the exclusive waitlist for our private beta and be the first to transform your company secretarial practice.
+                  Join the private beta waitlist. We are onboarding a small number of firms
+                  working on high-volume post-incorporation workflows.
                 </p>
                 <div className="flex justify-center">
                   <WaitlistForm />
@@ -218,8 +219,8 @@ export default function LandingPage() {
                 <span className="text-2xl font-bold tracking-tight">Estly</span>
               </div>
               <p className="text-muted-foreground max-w-sm leading-relaxed">
-                The AI-native workspace for modern company secretaries. 
-                Streamlining entity management and post-licensing changes.
+                Early-stage AI workflow tooling for corporate services operations.
+                Start with intake, review, records, and draft document generation.
               </p>
             </div>
             <div>
@@ -232,7 +233,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-border/50">
-            <p className="text-sm text-muted-foreground">© 2025 Estly AI. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© 2026 Estly AI. All rights reserved.</p>
             <div className="flex items-center gap-8">
               <a href="#" className="text-sm text-muted-foreground hover:text-foreground">Privacy Policy</a>
               <a href="#" className="text-sm text-muted-foreground hover:text-foreground">Terms of Service</a>

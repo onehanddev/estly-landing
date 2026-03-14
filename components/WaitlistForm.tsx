@@ -8,16 +8,35 @@ import { cn } from "@/lib/utils";
 export default function WaitlistForm() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
     setStatus("loading");
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setStatus("success");
-    setEmail("");
+    setError(null);
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to join waitlist");
+      }
+
+      setStatus("success");
+      setEmail("");
+    } catch (err) {
+      setStatus("idle");
+      setError(err instanceof Error ? err.message : "Failed to join waitlist");
+    }
   };
 
   if (status === "success") {
@@ -68,8 +87,13 @@ export default function WaitlistForm() {
           )}
         </button>
       </div>
+      {error && (
+        <p className="mt-2 text-xs text-red-500 text-center sm:text-left">
+          {error}
+        </p>
+      )}
       <p className="mt-3 text-xs opacity-70 text-center sm:text-left">
-        Join 200+ company secretaries in the private beta.
+        Private beta for corporate services and incorporation teams.
       </p>
     </form>
   );
