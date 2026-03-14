@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { 
   Shield, 
   Mail, 
@@ -34,9 +35,7 @@ export default function LandingPage() {
       <nav className="fixed top-0 w-full z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Shield className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <Image src="/icon.svg" alt="Estly" width={32} height={32} className="w-8 h-8 rounded-lg" />
             <span className="text-xl font-bold tracking-tight">Estly</span>
             <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
               Beta
@@ -215,9 +214,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-6">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Shield className="w-5 h-5 text-primary-foreground" />
-                </div>
+                <Image src="/icon.svg" alt="Estly" width={32} height={32} className="w-8 h-8 rounded-lg" />
                 <span className="text-2xl font-bold tracking-tight">Estly</span>
               </div>
               <p className="text-muted-foreground max-w-sm leading-relaxed">
