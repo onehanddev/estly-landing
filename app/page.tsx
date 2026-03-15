@@ -28,7 +28,45 @@ const stagger = {
   }
 };
 
+function extractYouTubeVideoId(value: string): string | null {
+  const input = value.trim();
+  if (!input) return null;
+
+  const idPattern = /^[a-zA-Z0-9_-]{11}$/;
+  if (idPattern.test(input)) return input;
+
+  try {
+    const url = new URL(input);
+    if (url.hostname.includes("youtu.be")) {
+      const id = url.pathname.replace("/", "").trim();
+      return idPattern.test(id) ? id : null;
+    }
+
+    if (url.hostname.includes("youtube.com")) {
+      const fromQuery = url.searchParams.get("v");
+      if (fromQuery && idPattern.test(fromQuery)) return fromQuery;
+
+      const pathParts = url.pathname.split("/").filter(Boolean);
+      const embedIndex = pathParts.findIndex((part) => part === "embed");
+      if (embedIndex >= 0) {
+        const fromEmbed = pathParts[embedIndex + 1];
+        return fromEmbed && idPattern.test(fromEmbed) ? fromEmbed : null;
+      }
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
 export default function LandingPage() {
+  const rawYouTubeVideo = process.env.NEXT_PUBLIC_ESTLY_DEMO_YOUTUBE_URL || "";
+  const youtubeVideoId = extractYouTubeVideoId(rawYouTubeVideo);
+  const youtubeEmbedUrl = youtubeVideoId
+    ? `https://www.youtube.com/embed/${youtubeVideoId}?rel=0&modestbranding=1`
+    : null;
+
   return (
     <div className="min-h-screen bg-background selection:bg-primary/20">
       {/* Navbar */}
@@ -108,6 +146,48 @@ export default function LandingPage() {
                 Book a Demo
                 <ArrowUpRight className="h-4 w-4" />
               </a>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Demo Section */}
+        <section className="pb-16 md:pb-24">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mx-auto max-w-5xl"
+            >
+              <div className="rounded-3xl border border-border/60 bg-gradient-to-b from-background to-muted/30 p-4 md:p-6 shadow-xl">
+                <div className="mb-4 md:mb-6">
+                  <p className="text-xs md:text-sm uppercase tracking-[0.18em] text-primary font-semibold">
+                    Product Demo
+                  </p>
+                  <h2 className="mt-2 text-2xl md:text-4xl font-bold tracking-tight">
+                    See Estly run end-to-end on a real workflow
+                  </h2>
+                </div>
+
+                <div className="relative aspect-video overflow-hidden rounded-2xl border border-border/60 bg-black">
+                  {youtubeEmbedUrl ? (
+                    <iframe
+                      className="h-full w-full"
+                      src={youtubeEmbedUrl}
+                      title="Estly Product Demo"
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-sm text-white/80">
+                      YouTube demo video URL is not configured.
+                    </div>
+                  )}
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>

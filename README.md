@@ -47,3 +47,16 @@ create table if not exists public.waitlist_signups (
   created_at timestamptz default now()
 );
 ```
+
+## Demo Video (YouTube Embed)
+
+Landing page video reads from:
+
+```bash
+NEXT_PUBLIC_ESTLY_DEMO_YOUTUBE_URL=<youtube-url-or-video-id>
+```
+
+Accepted formats:
+- Full YouTube URL (e.g. `https://www.youtube.com/watch?v=VIDEO_ID`)
+- Short URL (e.g. `https://youtu.be/VIDEO_ID`)
+- Raw 11-character video ID
