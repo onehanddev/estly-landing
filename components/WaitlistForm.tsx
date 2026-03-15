@@ -28,7 +28,11 @@ export default function WaitlistForm() {
 
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.error || "Failed to join waitlist");
+        const detailText =
+          typeof result.details === "string" && result.details.trim().length > 0
+            ? ` (${result.details})`
+            : "";
+        throw new Error((result.error || "Failed to join waitlist") + detailText);
       }
 
       setStatus("success");

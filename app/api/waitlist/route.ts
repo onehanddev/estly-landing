@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_WAITLIST_TABLE = "waitlist_signups";
+const FALLBACK_WAITLIST_TABLE = "waitlist";
 
 export async function POST(request: NextRequest) {
   let body: { email?: string } = {};
@@ -19,53 +20,60 @@ export async function POST(request: NextRequest) {
 
   const supabaseUrl =
     process.env.WAITLIST_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey =
+  const supabaseKey =
     process.env.WAITLIST_SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const waitlistTable = process.env.WAITLIST_TABLE || DEFAULT_WAITLIST_TABLE;
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.WAITLIST_SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const waitlistTable = (process.env.WAITLIST_TABLE || DEFAULT_WAITLIST_TABLE).trim();
 
-  if (!supabaseUrl || !serviceRoleKey) {
+  if (!supabaseUrl || !supabaseKey) {
     return NextResponse.json(
       {
         error:
-          "Waitlist is not configured. Set WAITLIST_SUPABASE_URL and WAITLIST_SUPABASE_SERVICE_ROLE_KEY.",
+          "Waitlist is not configured. Set WAITLIST_SUPABASE_URL and a Supabase key.",
       },
       { status: 500 }
     );
   }
 
   const normalizedUrl = supabaseUrl.replace(/\/$/, "");
-  const insertUrl = `${normalizedUrl}/rest/v1/${waitlistTable}?on_conflict=email`;
+  const candidateTables =
+    waitlistTable === DEFAULT_WAITLIST_TABLE
+      ? [waitlistTable, FALLBACK_WAITLIST_TABLE]
+      : [waitlistTable];
 
-  const payload = [
-    {
-      email,
-      source: "landing_page",
-      created_at: new Date().toISOString(),
-    },
-  ];
+  // Keep payload minimal to avoid failures if optional columns don't exist.
+  const payload = [{ email }];
+  let lastErrorBody = "";
+  let lastStatus = 502;
 
-  const response = await fetch(insertUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: serviceRoleKey,
-      Authorization: `Bearer ${serviceRoleKey}`,
-      Prefer: "resolution=merge-duplicates,return=minimal",
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    return NextResponse.json(
-      {
-        error: "Failed to save waitlist signup",
-        details: errorText || "Unknown upstream error",
+  for (const tableName of candidateTables) {
+    const insertUrl = `${normalizedUrl}/rest/v1/${tableName}?on_conflict=email`;
+    const response = await fetch(insertUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: supabaseKey,
+        Authorization: `Bearer ${supabaseKey}`,
+        Prefer: "resolution=merge-duplicates,return=minimal",
       },
-      { status: 502 }
-    );
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      return NextResponse.json({ success: true, table: tableName });
+    }
+
+    lastStatus = response.status || 502;
+    lastErrorBody = await response.text();
   }
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json(
+    {
+      error: "Failed to save waitlist signup",
+      details: lastErrorBody || "Unknown upstream error",
+    },
+    { status: lastStatus >= 400 ? lastStatus : 502 }
+  );
 }

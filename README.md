@@ -30,7 +30,12 @@ WAITLIST_SUPABASE_SERVICE_ROLE_KEY=<service-role-key>
 WAITLIST_TABLE=waitlist_signups
 ```
 
-`WAITLIST_TABLE` is optional (defaults to `waitlist_signups`).
+If service-role is not set, the endpoint will also try:
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `WAITLIST_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+`WAITLIST_TABLE` is optional (defaults to `waitlist_signups`, then falls back to `waitlist`).
 
 Suggested table:
 

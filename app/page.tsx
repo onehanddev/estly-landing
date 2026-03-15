@@ -9,7 +9,8 @@ import {
   Zap, 
   Workflow, 
   CheckCircle, 
-  Database
+  Database,
+  ArrowUpRight
 } from "lucide-react";
 import WaitlistForm from "@/components/WaitlistForm";
 
@@ -98,6 +99,15 @@ export default function LandingPage() {
               className="flex flex-col items-center justify-center gap-4"
             >
               <WaitlistForm />
+              <a
+                href="https://calendly.com/hakimuddin/estly"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-6 py-3 text-sm md:text-base font-semibold text-primary hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20 transition-all"
+              >
+                Book a Demo
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
             </motion.div>
           </div>
         </section>
