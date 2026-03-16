@@ -13,6 +13,7 @@ import {
   ArrowUpRight
 } from "lucide-react";
 import WaitlistForm from "@/components/WaitlistForm";
+import { trackPosthogEvent } from "@/lib/posthog";
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -61,11 +62,14 @@ function extractYouTubeVideoId(value: string): string | null {
 }
 
 export default function LandingPage() {
+  const [hasTrackedDemoSectionClick, setHasTrackedDemoSectionClick] =
+    React.useState(false);
   const rawYouTubeVideo = process.env.NEXT_PUBLIC_ESTLY_DEMO_YOUTUBE_URL || "";
   const youtubeVideoId = extractYouTubeVideoId(rawYouTubeVideo);
   const youtubeEmbedUrl = youtubeVideoId
     ? `https://www.youtube.com/embed/${youtubeVideoId}?rel=0&modestbranding=1`
     : null;
+  const youtubeWatchUrl = youtubeVideoId ? `https://youtu.be/${youtubeVideoId}` : null;
 
   return (
     <div className="min-h-screen bg-background selection:bg-primary/20">
@@ -136,11 +140,14 @@ export default function LandingPage() {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="flex flex-col items-center justify-center gap-4"
             >
-              <WaitlistForm />
+              <WaitlistForm placement="hero" />
               <a
                 href="https://calendly.com/hakimuddin/estly"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  trackPosthogEvent("book_demo_clicked", { placement: "hero" });
+                }}
                 className="inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-6 py-3 text-sm md:text-base font-semibold text-primary hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20 transition-all"
               >
                 Book a Demo
@@ -170,7 +177,15 @@ export default function LandingPage() {
                   </h2>
                 </div>
 
-                <div className="relative aspect-video overflow-hidden rounded-2xl border border-border/60 bg-black">
+                <div
+                  className="relative aspect-video overflow-hidden rounded-2xl border border-border/60 bg-black"
+                  onClick={() => {
+                    if (!hasTrackedDemoSectionClick) {
+                      trackPosthogEvent("demo_video_section_clicked");
+                      setHasTrackedDemoSectionClick(true);
+                    }
+                  }}
+                >
                   {youtubeEmbedUrl ? (
                     <iframe
                       className="h-full w-full"
@@ -187,6 +202,22 @@ export default function LandingPage() {
                     </div>
                   )}
                 </div>
+                {youtubeWatchUrl && (
+                  <div className="mt-4 flex justify-end">
+                    <a
+                      href={youtubeWatchUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        trackPosthogEvent("demo_video_opened_on_youtube");
+                      }}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                    >
+                      Watch on YouTube
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
@@ -291,7 +322,7 @@ export default function LandingPage() {
                   working on high-volume post-incorporation workflows.
                 </p>
                 <div className="flex justify-center">
-                  <WaitlistForm />
+                  <WaitlistForm placement="cta" />
                 </div>
               </div>
             </motion.div>

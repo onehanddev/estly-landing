@@ -4,8 +4,13 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackPosthogEvent } from "@/lib/posthog";
 
-export default function WaitlistForm() {
+interface WaitlistFormProps {
+  placement?: "hero" | "cta";
+}
+
+export default function WaitlistForm({ placement = "hero" }: WaitlistFormProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -16,6 +21,7 @@ export default function WaitlistForm() {
 
     setStatus("loading");
     setError(null);
+    trackPosthogEvent("waitlist_submit_started", { placement });
 
     try {
       const response = await fetch("/api/waitlist", {
@@ -37,9 +43,16 @@ export default function WaitlistForm() {
 
       setStatus("success");
       setEmail("");
+      trackPosthogEvent("waitlist_submit_succeeded", { placement });
     } catch (err) {
       setStatus("idle");
-      setError(err instanceof Error ? err.message : "Failed to join waitlist");
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to join waitlist";
+      setError(errorMessage);
+      trackPosthogEvent("waitlist_submit_failed", {
+        placement,
+        error_message: errorMessage,
+      });
     }
   };
 

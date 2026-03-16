@@ -60,3 +60,36 @@ Accepted formats:
 - Full YouTube URL (e.g. `https://www.youtube.com/watch?v=VIDEO_ID`)
 - Short URL (e.g. `https://youtu.be/VIDEO_ID`)
 - Raw 11-character video ID
+
+## Microsoft Clarity
+
+Clarity is enabled when this env var is set:
+
+```bash
+NEXT_PUBLIC_CLARITY_PROJECT_ID=<your-clarity-project-id>
+```
+
+You can find the project ID in Clarity project settings.
+
+## PostHog
+
+PostHog is enabled when this env vars are set:
+
+```bash
+NEXT_PUBLIC_POSTHOG_KEY=<posthog-project-api-key>
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+```
+
+If your project is in EU, use:
+
+```bash
+NEXT_PUBLIC_POSTHOG_HOST=https://eu.i.posthog.com
+```
+
+Tracked events:
+- `book_demo_clicked`
+- `demo_video_section_clicked`
+- `demo_video_opened_on_youtube`
+- `waitlist_submit_started`
+- `waitlist_submit_succeeded`
+- `waitlist_submit_failed`
